@@ -29,7 +29,7 @@ function getInput(callback) {
         return;
     }
     // no output file path specified
-    if (input.length[1] === undefined) {
+    if (input[1] === undefined) {
         callback("Please enter the path of the JSON file you would like to write to!", null);
         return;
     }

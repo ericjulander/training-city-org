@@ -9,7 +9,7 @@ function consolidateByKey(objectArray, sortingKey) {
     }, {});
 }
 
-function createNameWithArrayObject(object2Reduce, arrayName = "values") {
+function createHarchObject(object2Reduce, arrayName = "values") {
     var newArray = [];
     for (var i in object2Reduce) {
         var tempObject = {};
@@ -36,7 +36,7 @@ function determineNumbericOrder(number, number2Compare) {
 /*
  * Array function that sorts two strings alphabetically 
  */
-function determineAlphabeticalOrder(string1, string2) {
+function determineAlphOrder(string1, string2) {
     var length = (string1.length < string2.length) ? string1.length : string2.length;
     var pos;
     // loops until it finds the correct placenment for the specified work
@@ -53,8 +53,8 @@ function determineAlphabeticalOrder(string1, string2) {
 
 
 
-function sortNameWithArrayObjectAlphabetically(object1, object2) {
-    return determineAlphabeticalOrder(object1.name, object2.name);
+function sortHarchObjectAlph(object1, object2) {
+    return determineAlphOrder(object1.name, object2.name);
 }
 
 /*
@@ -62,18 +62,18 @@ function sortNameWithArrayObjectAlphabetically(object1, object2) {
  */
 function consolidateCSVData(csvData) {
     var consolidatedObject = consolidateByKey(csvData, "Country Name");
-    var countries = createNameWithArrayObject(consolidatedObject, "states");
+    var countries = createHarchObject(consolidatedObject, "states");
     var completeData = countries.map(function (country) {
         var stateList = consolidateByKey(country.states, "State Name");
-        var states = createNameWithArrayObject(stateList, "cities").map(function (state) {
+        var states = createHarchObject(stateList, "cities").map(function (state) {
             state.cities = state.cities.map(cleanCityData).sort(function (cityA, cityB) {
                 return determineNumbericOrder(cityA.population, cityB.population);
             })
             return state;
-        }).sort(sortNameWithArrayObjectAlphabetically);
+        }).sort(sortHarchObjectAlph);
         country.states = states;
         return country;
-    }).sort(sortNameWithArrayObjectAlphabetically);
+    }).sort(sortHarchObjectAlph);
 
     return completeData;
 }
