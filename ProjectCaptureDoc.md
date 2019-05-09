@@ -77,6 +77,7 @@ Josh will give us the highly confidential data on an indescreet flashdrive every
 #### Definition of Outputs
 
 <!-- List here a type definition for each output? For example, if the changes are directly to the LMS, list all changes that occur. If it is a CSV define the column names. If it is a JSON, give an example of the JSON structure. -->
+### JSON Data Structure
 It creates a formatted JSON file in the following format:
 ```javascript
 [{

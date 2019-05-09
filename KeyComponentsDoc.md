@@ -6,14 +6,23 @@
 
 ## Magic Box Chart
 
-![alt text](linkToImage)
+![alt text](./project-capture.jpg)
 
 <!-- Think through the process as much as makes sense, and then create a magic box chart with the whiteboard and place it here. -->
 
 ## Explanation of Design
 <!-- Add explanation of the Magic Boxes image above. Answers to the prompts below may also be appropriate to include here. -->
+Basically the program has one main function called "consolidateCSVData". It will reorganize data from the CSV array format to the hierarchical format displayed in the [Project Capture Document](./ProjectCaptureDoc.md/). 
 
-### Used Libraries
+To create the hierarchical object structure needed we have 3 basic functions:
+## consolidateByKey (objectArray, sortingKey)
+This 
+#### Parameters:
+> objectArray: The object to split into multiple sub-arrays.
+
+>sortingKey: The key to sort the objects by
+
+### Used Libraries 
 
 ## Things to Consider Before Getting Project Approved
 - Are there any approved libraries that I can use? [Link to Approved Library List]
