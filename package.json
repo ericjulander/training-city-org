@@ -1,0 +1,25 @@
+{
+  "name": "city-org",
+  "version": "1.0.0",
+  "description": "Sorts a csv of city data and organises it into a JSON file",
+  "main": "main.js",
+  "dependencies": {
+    "d3-dsv": "^1.1.1",
+    "json-stringify-pretty-compact": "^2.0.0",
+    "strip-bom": "^4.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericjulander/training-city-org.git"
+  },
+  "author": "Eric Julander",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ericjulander/training-city-org/issues"
+  },
+  "homepage": "https://github.com/ericjulander/training-city-org#readme"
+}

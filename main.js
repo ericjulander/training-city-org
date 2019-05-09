@@ -1,12 +1,3 @@
-const [d3, fs, stripBom, stringify] = [require("d3-dsv"), require("fs"), require("strip-bom"), require("json-stringify-pretty-compact")];
-
-/*
- * Reads data from a csv file and then turns it into an object array
- */
-function importCSVData(path) {
-    return d3.csvParse(stripBom(fs.readFileSync(path, "utf8")));
-}
-
 /*
  * Creates arrays by sorting specific keys within an object
  */
@@ -17,7 +8,6 @@ function consolidateByKey(objectArray, sortingKey) {
         return consolidatedObject;
     }, {});
 }
-
 
 function createNameWithArrayObject(object2Reduce, arrayName = "values") {
     var newArray = [];
@@ -30,13 +20,41 @@ function createNameWithArrayObject(object2Reduce, arrayName = "values") {
     return newArray;
 }
 
-
-
 function cleanCityData(city) {
     return {
         name: city.Name,
-        population: city.Population
+        population: parseInt(city.Population)
     }
+}
+
+/*
+ * determines if the 1 item comes before or after the second numerically (1 = after, -1 = before, 0 = same )
+ */
+function determineNumbericOrder(number, number2Compare) {
+    return (number - number2Compare) / Math.abs(number - number2Compare) || 0;
+}
+/*
+ * Array function that sorts two strings alphabetically 
+ */
+function determineAlphabeticalOrder(string1, string2) {
+    var length = (string1.length < string2.length) ? string1.length : string2.length;
+    var pos;
+    // loops until it finds the correct placenment for the specified work
+    for (var i = 0; i < length; i++) {
+        // gets the the character at the specified position in the array
+        var [c1, c2] = [string1.charCodeAt(i), string2.charCodeAt(i)];
+        // determines the correct order of the two items
+        pos = determineNumbericOrder(c1, c2);
+        //leaves the loop when it finds one character that is different and places it
+        if (pos !== 0) break;
+    }
+    return pos;
+}
+
+
+
+function sortNameWithArrayObjectAlphabetically(object1, object2) {
+    return determineAlphabeticalOrder(object1.name, object2.name);
 }
 
 /*
@@ -44,31 +62,32 @@ function cleanCityData(city) {
  */
 function consolidateCSVData(csvData) {
     var consolidatedObject = consolidateByKey(csvData, "Country Name");
-    var regions = createNameWithArrayObject(consolidatedObject, "states");
-    var completeData = regions.map(function (region) {
-        var stateList = consolidateByKey(region.states, "State Name");
+    var countries = createNameWithArrayObject(consolidatedObject, "states");
+    var completeData = countries.map(function (country) {
+        var stateList = consolidateByKey(country.states, "State Name");
         var states = createNameWithArrayObject(stateList, "cities").map(function (state) {
-            state.cities = state.cities.map(cleanCityData);
+            state.cities = state.cities.map(cleanCityData).sort(function (cityA, cityB) {
+                return determineNumbericOrder(cityA.population, cityB.population);
+            })
             return state;
-        });
-        region.states = states;
-        return region;
-    });
+        }).sort(sortNameWithArrayObjectAlphabetically);
+        country.states = states;
+        return country;
+    }).sort(sortNameWithArrayObjectAlphabetically);
 
     return completeData;
-
 }
 
 /*
- * Prints the consolidated data to a JSON file
+ * data is an object with two keys:
+ * csvPath - the path of the cities csv file to extract
+ * 
  */
-function exportConsolidatedDataToJSON(consolidatedObject, path = "./output.txt", encoding = "utf8") {
-    fs.writeFileSync(path, stringify(consolidatedObject), encoding);
+function main(citiesData, callBack) {
+    // convert the csv data to an array from an object
+    return callBack(null, consolidateCSVData(citiesData))
 }
 
-(function () {
-    // convert the csv data to an array from an object
-    var csvData = [].concat(importCSVData("./citiesData.csv"));
-    var completeData = consolidateCSVData(csvData);
-    exportConsolidatedDataToJSON(completeData, "./cities/cities.json");
-})()
+module.exports = {
+    main
+};
