@@ -280,11 +280,12 @@ This is used to generate the return for an Array.sort() method. Useful when tryn
 
 #### Returns:
 A number representing the position of the compared number (Used as a return for the Array.sort() method):
-|  |                                              |
----:|----------------------------------------------|
--1  | The number is less than the compared number  |
- 0  | The number is the same as the compared number |
- 1  | The number is greater than the compared number |
+
+|   |                                              |
+|---:|----------------------------------------------|
+|-1  | The number is less than the compared number  |
+| 0  | The number is the same as the compared number |
+| 1  | The number is greater than the compared number |
 
 
 > ## determineAlphOrder(string1, string2)
@@ -297,11 +298,12 @@ This is used to generate the return for an Array.sort() method when determining 
 
 #### Returns:
 A number representing the position of the compared number (Used as a return for the Array.sort() method):
-|  |                                              |
----:|----------------------------------------------|
--1  | The number is less than the compared number  |
- 0  | The number is the same as the compared number |
- 1  | The number is greater than the compared number |
+
+|   |                                              |
+|---:|----------------------------------------------|
+|-1  | The number is less than the compared number  |
+| 0  | The number is the same as the compared number |
+| 1  | The number is greater than the compared number |
 
 ### Used Libraries 
 bin.js:
