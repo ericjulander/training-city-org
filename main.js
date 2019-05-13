@@ -1,7 +1,11 @@
 /*
- * Creates arrays by sorting specific keys within an object
+ * It reduces an array of objects into one object where sub-objects 
+ * who share the same value at the specified key are grouped together 
+ * in an array. These arrays are stored in the reduced object under a key 
+ * named after their common value. 
  */
 function consolidateByKey(objectArray, sortingKey) {
+    console.log(JSON.stringify(objectArray), sortingKey);
     return objectArray.reduce(function (consolidatedObject, object2Sort) {
         var depositArray = consolidatedObject[object2Sort[sortingKey]];
         consolidatedObject[object2Sort[sortingKey]] = (depositArray !== undefined) ? [].concat(depositArray, object2Sort) : object2Sort;
