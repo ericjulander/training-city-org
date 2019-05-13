@@ -14,13 +14,93 @@
 <!-- Add explanation of the Magic Boxes image above. Answers to the prompts below may also be appropriate to include here. -->
 The program has one main function called "consolidateCSVData". It will reorganize data from the CSV array and format it into a hierarchical object after the format displayed in the [Project Capture Document](./ProjectCaptureDoc.md/). It also uses two sort functions to sort the cities by population and the states/countries by alphabetical order.
 
-We use three basic functions to put the object into the hierarchical format:
+We will use these basic functions to put the object into the hierarchical format:
+
+---
+  > ### consolidateByKey(objectArray, sortingKey)
+
+  It reduces an array of objects into one object where sub-objects 
+  who share the same value at the specified key are grouped together 
+  in an array. These arrays are stored in the reduced object under a key 
+  named after their common value. 
+  
+  #### Params:
+  >  __objectArray__: The array of objects to consolidate into one object with multiple sub-arrays.
+
+  >  __sortingKey__: The key to sort the objects common values by.
+ 
+---
+
+> ### createHarchObject(object2Reduce, arrayName = "values")
+  This takes the consolidated object and transfroms it into a hierarchical format.
+  
+  #### Params:
+  > __object2Reduce:__ The object to put in the harch format.
+
+  > __arrayName:__  The name of the key to store the array in.
+ ___
+
+
+> ### cleanCityData(city)
+  This function takes the city object and strips it down to just its name and poulation. 
+  #### Params:
+  >__city:__ The city object created by the csv file.  
+ ___
+
+
+> ### determineNumbericOrder(number, number2Compare)
+  This is used to generate the return for an Array.sort() method. Useful when tryng to sort two objects by the sub-properties they contain.
+  #### Params:
+  >__number:__ the number you would like to determine the order for.
+
+  >__number2Compare:__ the number to compare the first number with.
+
+  Returns (1 = after, -1 = before, 0 = same )
+ 
+___
+
+> ### determineAlphOrder(string1, string2)
+  This is used to generate the return for an Array.sort() method when determining the alphabetic order of two strings. Useful when comparing two sub-properties of objects when sorting them.
+  Note: This is dependent on the determineNumbericOrder function
+  Returns (1 = after, -1 = before, 0 = same )
+ 
+___
+> ### consolidateCSVData(csvData)
+  Consolidates the object array into one multi-dimensional object sorted in hierarchical order of country, state, city  with the countries and states sorted in alphabetical order and the cities sorted by population.
+  ___
+ 
+
+
+
+## Things to Consider Before Getting Project Approved
+- Are there any approved libraries that I can use? [Link to Approved Library List]
+- Are there design patterns that will help?  [Link to Design Patterns]
+- Can I design it so that it is a general tool instead of a specific solution?
+- How can it be easily expanded?
+- What does the minimum viable product look like?
+
+## Prep for Learning Phase
+- What do I need to learn
+- How will I learn it
+- What will I do to learn it (prototypes/tutorials/research time limit?)
+- What is the definition of done for my learning process
+- How do I measure the progress of learning
+- Is there a deliverable that can be created during the learning process?
+
+-----
+
+#### *Preliminary Design Approved By:* 
+#### *Preliminary Design Approval Date:*
+
+# Full Design
+
+## Component Diagrams
 > ## consolidateByKey (objectArray, sortingKey)
 It reduces an array of objects into one object where sub-objects who share the same value at the specified key are grouped together in an array. These arrays are stored in the reduced object under a key named after their common value. 
 #### Parameters:
-> objectArray: The array of objects to consolidate into one obhject with multiple sub-arrays.
+> __objectArray:__ The array of objects to consolidate into one obhject with multiple sub-arrays.
 
->sortingKey: The key to sort the objects common values by.
+>__sortingKey:__ The key to sort the objects common values by.
 
 ##### Returns:
 It returns a consolidated object in the following format: 
@@ -60,11 +140,6 @@ var states = [{
     }
 ]
 
-
-
-/*
- * Creates arrays by sorting specific keys within an object
- */
 function consolidateByKey(objectArray, sortingKey) {
     return objectArray.reduce(function (consolidatedObject, object2Sort) {
         var depositArray = consolidatedObject[object2Sort[sortingKey]];
@@ -109,9 +184,9 @@ console.log(consolidateByKey(states, "Name"));
 > ## createHarchObject(object2Reduce, arrayName)
 This takes the consolidated object and transfroms it into a hierarchical format.
 #### Parameters:
-> object2Reduce: The object to put in the harch format.
+> __object2Reduce:__ The object to put in the harch format.
 
->arrayName: The name of the key to store the array in.
+> __arrayName:__ The name of the key to store the array in.
  
 #### Returns:
 Returns a hierarchical object looking like this:
@@ -185,7 +260,7 @@ console.log(createHarchObject(states, "cities"))
 This function takes the city object and strips it down to just its name and poulation. 
 
 #### Parameters:
-> city: The city object created by the csv file. 
+> __city:__ The city object created by the csv file. 
 
 #### Returns:
 The stripped city object in this format:
@@ -197,58 +272,51 @@ The stripped city object in this format:
 ``` 
 
 > ## determineNumbericOrder(number, number2Compare)
+This is used to generate the return for an Array.sort() method. Useful when tryng to sort two objects by the sub-properties they contain.
 #### Parameters:
->number: the number you would like to determine the order for.
+>__number:__ the number you would like to determine the order for.
 
->number2Compare: the number to compare the first number with.
+>__number2Compare:__ the number to compare the first number with.
 
 #### Returns:
-The stripped city object in this format:
-   | |
----|---|
--1  | The number is less than the compared number
-0  | The Value is the same as the compared number 
-1  | The Value is the same as the compared number 
+A number representing the position of the compared number (Used as a return for the Array.sort() method):
+|  |                                              |
+---:|----------------------------------------------|
+-1  | The number is less than the compared number  |
+ 0  | The number is the same as the compared number |
+ 1  | The number is greater than the compared number |
+
+
+> ## determineAlphOrder(string1, string2)
+This is used to generate the return for an Array.sort() method when determining the alphabetic order of two strings. Useful when comparing two sub-properties of objects when sorting them.
+>*Note:* This is dependent on the __determineNumbericOrder__ function
+#### Parameters:
+>__string1:__ the string you would like to determine the order for.
+
+>__string2:__ the string to compare the string number with.
+
+#### Returns:
+A number representing the position of the compared number (Used as a return for the Array.sort() method):
+|  |                                              |
+---:|----------------------------------------------|
+-1  | The number is less than the compared number  |
+ 0  | The number is the same as the compared number |
+ 1  | The number is greater than the compared number |
 
 ### Used Libraries 
-
-## Things to Consider Before Getting Project Approved
-- Are there any approved libraries that I can use? [Link to Approved Library List]
-- Are there design patterns that will help?  [Link to Design Patterns]
-- Can I design it so that it is a general tool instead of a specific solution?
-- How can it be easily expanded?
-- What does the minimum viable product look like?
-
-## Prep for Learning Phase
-- What do I need to learn
-- How will I learn it
-- What will I do to learn it (prototypes/tutorials/research time limit?)
-- What is the definition of done for my learning process
-- How do I measure the progress of learning
-- Is there a deliverable that can be created during the learning process?
-
------
-
-#### *Preliminary Design Approved By:* 
-#### *Preliminary Design Approval Date:*
-
-# Full Design
-
-## Component Diagrams
-<!-- Diagrams and companion explanations for all Key Components.
-These would include information about inputs, outputs, and what a function does for every major function. -->
-
-<!-- For each component, the following template will be followed: (In other words, the template below will repeat for each component)-->
-
-### *Insert Component name here*
+bin.js:
+- d3-dsv
+- fs
+- strip-bom
+- json-stringify-pretty-compact
 
 Diagram:
 
-*Insert Diagram Here*
+![alt text](./project-capture.jpg)
 
 Explanation:
 
-*Insert Explanation here*
+The main function requires the user to input the file paths for the csvFile to read and then the output file. I then reads the csv data and sends it to the __consolidateCSV__ function. That function then takes the csv data and groups the different countries using the  __consolidateByKey__ function. It then runs that object thought the __createHarchObject__ function so that it is in the hierarchical structure. It then maps this array of countries to apply this same process to separate the states and cities within it. While it is doing this, it uses the __cleanCityData__ function to remove the metadata from the cities object. Once this process is done, it sorts the countries and states by aplhabetical order and the cities by population. The __consolidateCSV__ function then returns the cleaned and sorted hierarchical object. Main then passes this object to __printCSVData__ with the path of the output file. It then srigifies the object and prints it into the specified document.
 
 <!-- For a future release:
 ## Test Plans

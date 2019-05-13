@@ -24,15 +24,16 @@ function getInput(callback) {
     // How to get input, eg. from file, commandline, inquierer, etc
 
     // no csv file path specified
-    if (input[0] === undefined) {
-        callback("Please enter the path of the csv file you would like to read!", null);
+    if (input[0] === undefined || !/(\.csv)/i.test(input[0])) {
+        callback("Please enter the path of the csv file you would like to read! Be sure to include the .csv extention.", null);
         return;
     }
     // no output file path specified
-    if (input[1] === undefined) {
-        callback("Please enter the path of the JSON file you would like to write to!", null);
+    if (input[1] === undefined || !/(\.json)/i.test(input[1])) {
+        callback("Please enter the path of the JSON file you would like to write to! Be sure to include the .json extention", null);
         return;
     }
+
 
     callback(null, {
         csvPath: input[0],
