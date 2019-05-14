@@ -116,7 +116,7 @@ It returns a consolidated object in the following format:
 ```
 
 
-
+<!--
 #### Example:
 ```javascript
 var states = [{
@@ -181,8 +181,12 @@ console.log(consolidateByKey(states, "Name"));
 */
 ```
 
+-->
+
 > ## createHarchObject(object2Reduce, arrayName)
 This takes the consolidated object and transfroms it into a hierarchical format.
+
+
 #### Parameters:
 > __object2Reduce:__ The object to put in the harch format.
 
@@ -191,12 +195,15 @@ This takes the consolidated object and transfroms it into a hierarchical format.
 #### Returns:
 Returns a hierarchical object looking like this:
 ```json
-{
-    "name": "The objects key",
-    "values": "Array of sub-objects"    
+{ 
+  "name": "value1",
+  "values":
+         [ { "sortingKey": "value1", "foo":"bar" },
+           { "sortingKey": "value1", "foo":"bar" } ]
 }
-```
 
+```
+<!--
 #### Example:
 ```javascript
 var states =
@@ -256,6 +263,7 @@ console.log(createHarchObject(states, "cities"))
 ]
 */
 ```
+-->
 > ## cleanCityData(city)
 This function takes the city object and strips it down to just its name and poulation. 
 

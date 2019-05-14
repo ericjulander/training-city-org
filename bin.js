@@ -23,7 +23,7 @@ function getInput(callback) {
     var input = [].concat(process.argv).slice(2, 4);
     // How to get input, eg. from file, commandline, inquierer, etc
 
-    // no csv file path specified
+    // no csv file path specified also makes sure they have the file extention tagged on the end
     if (input[0] === undefined || !/(\.csv)/i.test(input[0])) {
         callback("Please enter the path of the csv file you would like to read! Be sure to include the .csv extention.", null);
         return;
@@ -41,6 +41,17 @@ function getInput(callback) {
     });
     return;
 }
+
+
+
+
+/*
+ * Prints the consolidated data to a JSON file
+ */
+function exportConsolidatedDataToJSON(path = "./output.txt", consolidatedObject, encoding = "utf8") {
+    fs.writeFileSync(path, stringify(consolidatedObject), encoding);
+}
+
 
 /************************************************************************* 
  * Output Function
@@ -60,14 +71,6 @@ function errorHandling(error) {
     console.error(error);
     return;
 }
-
-/*
- * Prints the consolidated data to a JSON file
- */
-function exportConsolidatedDataToJSON(path = "./output.txt", consolidatedObject, encoding = "utf8") {
-    fs.writeFileSync(path, stringify(consolidatedObject), encoding);
-}
-
 
 /************************************************************************* 
  * Start
